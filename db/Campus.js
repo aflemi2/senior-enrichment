@@ -3,6 +3,12 @@ const { Sequelize } = conn;
 
 const Campus = conn.define('campus', {
   name: Sequelize.STRING
+}, {
+  getterMethods: {
+    imageUrl() {
+      return `/dist/images/campus${ this.id%5 }.jpg`;
+    }
+  }
 });
 
 // Campuses
