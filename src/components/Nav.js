@@ -10,22 +10,22 @@ const Nav = ({ students, campuses })=> {
     return null;
   }
   return (
-    <ul>
-      <li>
+    <ul className="navbar navbar-default">
+      <div>
         <NavLink to='/'>
           Home
         </NavLink>
-      </li>
-      <li>
+      </div>
+      <div>
         <NavLink to='/students'>
           Students ({ students.length })
         </NavLink>
-      </li>
-      <li>
+      </div>
+      <div>
       <NavLink to='/campuses'>
          Campuses ({ campuses.length })
         </NavLink>
-      </li>
+      </div>
     </ul>
   );
 };

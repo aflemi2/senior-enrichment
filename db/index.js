@@ -14,7 +14,9 @@ const syncAndSeed = ()=> {
       Campus.create({ name: 'East Campus'}),
       Student.create({ name: 'Moe' }),
       Student.create({ name: 'Larry'}),
-      Student.create({ name: 'Curly'})
+      Student.create({ name: 'Curly'}),
+      Student.create({ name: 'Brenda'}),
+      Campus.create({ name: 'Empty Campus'})
     ])
     .then(([ camp1, camp2, camp3, moe, larry, curly ])=> {
       return Promise.all([
