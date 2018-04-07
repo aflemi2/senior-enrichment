@@ -1,28 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-const Nav = ({ students })=> {
+const Nav = ({ students, campuses })=> {
   if(!students){
+    return null;
+  }
+  if(!campuses){
     return null;
   }
   return (
     <ul>
       <li>
-        Home
+        <NavLink to='/'>
+          Home
+        </NavLink>
       </li>
       <li>
-        Students ({ students.length })
+        <NavLink to='/students'>
+          Students ({ students.length })
+        </NavLink>
       </li>
       <li>
-        {/* Campuses ({ campuses.length }) */}
+      <NavLink to='/campuses'>
+         Campuses ({ campuses.length })
+        </NavLink>
       </li>
     </ul>
   );
 };
 
-const mapStateToProps = ({ students })=> {
+const mapStateToProps = ({ students, campuses })=> {
   return {
-    students
+    students,
+    campuses
   };
 };
 
