@@ -69,6 +69,7 @@ class StudentCreate extends Component {
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
     saveStudent: (student) => dispatch(saveStudent(student, history)),
+
   };
 };
 

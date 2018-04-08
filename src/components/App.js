@@ -28,7 +28,7 @@ class App extends Component{
           <Route path='/' exact component = { Home } />
           <Route path='/students' exact component = { Students } />
           <Route path='/campuses' exact component = { Campuses } />
-          {/* <Route path='/campuses/create' exact component = { CampusForm } /> */}
+           <Route path='/campuses/create' exact component = { CampusForm } />
           <Route path='/students/create' exact component = { StudentCreate } />
           <Route path='/campuses/:id' exact render = {({ match })=> <Campus id= { match.params.id*1 } />} />
           <Route path='/students/:id' exact render = {({ match })=> <Student id= { match.params.id*1 } />} />

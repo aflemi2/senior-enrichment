@@ -38,11 +38,12 @@ class StudentUpdate extends Component{
   }
 
   componentWillReceiveProps(nextProps){
+    const { firstName, lastName, gpa, email } = nextProps.props.student;
     this.setState({
-      firstName: nextProps.student ? nextProps.student.firstName : '',
-      lastName: nextProps.student ? nextProps.student.lastName : '',
-      gpa: nextProps.student ? nextProps.student.gpa : '',
-      email: nextProps.student ? nextProps.student.email : '',
+      firstName: nextProps.student ? firstName : '',
+      lastName: nextProps.student ? lastName : '',
+      gpa: nextProps.student ? gpa : '',
+      email: nextProps.student ? email : '',
     });
   }
   render(){

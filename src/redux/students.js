@@ -41,7 +41,7 @@ export const loadStudents = ()=> {
 
 export const deleteStudent = (student, history)=> {
   return (dispatch)=> {
-    return axios.delete(`/api/student/${student.id}`)
+    return axios.delete(`/api/students/${student.id}`)
       .then( () => dispatch({
         type: DELETE_STUDENT,
         student
@@ -56,7 +56,7 @@ export const deleteStudent = (student, history)=> {
 export const saveStudent = (student, history)=> {
   if(student.id){
     return (dispatch)=> {
-      return axios.put(`/api/student/${student.id}`, student)
+      return axios.put(`/api/students/${student.id}`, student)
         .then( result => result.data)
         .then( student => dispatch({
           type: UPDATE_STUDENT,
