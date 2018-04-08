@@ -12,6 +12,7 @@ const Student = ({ campus, student }) => {
       <hr />
       <img src={student.imageUrl} width={250} className="rounded" />
       <br />
+      <h4> GPA: { student.gpa }</h4>
       <h3>Attending:</h3>
       <h3>{ campusName }</h3>
     </div>

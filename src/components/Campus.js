@@ -31,6 +31,7 @@ const Campus = ({ campus, studentsOnCampus }) => {
       <h1>Welcome to {campus.name}</h1>
       <hr />
       <img src={campus.imageUrl} width={400} className="rounded" />
+      <div> {campus.description} </div>
       <br />
       <h3>Students:</h3>
       <h3>{students}</h3>
