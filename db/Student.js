@@ -21,7 +21,7 @@ const Student = conn.define('student', {
 },{
   getterMethods: {
     imageUrl() {
-      return `/public/images/student${ this.id%5 }.jpg`;
+      return `/public/images/student${ this.id%9 + 1}.jpg`;
     },
     name() {
       return `${this.firstName} ${this.lastName}`;
