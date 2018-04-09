@@ -55,6 +55,7 @@ export const deleteStudent = (student, history)=> {
 
 export const saveStudent = (student, history)=> {
   if(student.id){
+    console.log(student);
     return (dispatch)=> {
       return axios.put(`/api/students/${student.id}`, student)
         .then( result => result.data)

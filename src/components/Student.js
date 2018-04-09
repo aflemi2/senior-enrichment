@@ -1,80 +1,105 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { saveStudent } from '../redux/students';
 
-
-// class Student = ({ campus, student, campusesFiltered }) =>
 class Student extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { selectedCampus: -1};
+    this.state = {
+      selectedCampus: -1,
+      error: null
+    };
     this.onSave = this.onSave.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  onSave(){
-
+  onSave(ev) {
+    ev.preventDefault();
+    const { firstName, lastName, gpa, email } = this.props.student;
+    const student = {
+      id: this.props.id,
+      firstName: firstName,
+      lastName: lastName,
+      gpa: gpa,
+      email: email,
+      campusId: this.state.selectedCampus
+    };
+    this.props.saveStudent(student);
   }
 
-  onChange(){
-
+  onChange(ev) {
+    this.setState({ [ev.target.name]: ev.target.value });
   }
 
-render(){
-  const { campus, student, campusesFiltered } = this.props;
-  const { onSave, onChange } = this;
-  const { selectedCampus } = this.state;
-  const style = { color: 'red' };
-  const campusName = campus ? (
-    <div> Attending:
+  componentWillReceiveProps(nextProps){
+    if(nextProps.student){
+      this.setState({
+        id: nextProps.student.id,
+        firstName: nextProps.student.firstName,
+        lastName: nextProps.student.lastName,
+        gpa: nextProps.student.gpa,
+        email: nextProps.student.email,
+        campusId: nextProps.student.campusId
+      });
+    }
+  }
+
+  render() {
+    const { campus, student, campusesFiltered } = this.props;
+    const { onSave, onChange } = this;
+    const { selectedCampus } = this.state;
+    const style = { color: 'red' };
+    const campusName = campus ? (
+      <div> Attending:
       <Link to={`/campuses/${campus.id}`}> {campus.name} </Link>
-    </div>
+      </div>
     ) : (
-    <p style={style}>This student is not registered with a campus.</p>);
-  if (!student) {
-    return null;
-  }
-  return (
-    <div className='container'>
-      <h1>Student Profile Page</h1>
-      <hr />
-      <div className='row'>
-        <div className='col'>
-          <img src={student.imageUrl} width={250} className="rounded" />
-        </div>
-        <br />
-        <div className='col'>
-          <h2> {student.name} </h2>
-          <h3> {student.email}</h3>
-          <h3> {campusName} </h3>
-          <h3> GPA: {student.gpa}</h3>
-          <Link to={`/students/update/${student.id}`}>
-            <button>Edit Student</button></Link>
+        <p style={style}>This student is not registered with a campus.</p>);
+    if (!student) {
+      return null;
+    }
+    return (
+      <div className='container'>
+        <h1>Student Profile Page</h1>
+        <hr />
+        <div className='row'>
+          <div className='col'>
+            <img src={student.imageUrl} width={250} className="rounded" />
+          </div>
           <br />
-          <br />
-          <form onSubmit={ onSave }>
-            <select value={selectedCampus} name='selectedCampus' onChange={ onChange } >
-              <option value='-1'>Select Campus</option>
-              {
-                campusesFiltered.map(campus => {
-                  return (
-                    <option key={campus.id} value={campus.id}>
-                      {campus.name}
-                    </option>
-                  );
-                })
-              }
-            </select>
+          <div className='col'>
+            <h2> {student.name} </h2>
+            <h3> {student.email}</h3>
+            <h3> {campusName} </h3>
+            <h3> GPA: {student.gpa}</h3>
+            <Link to={`/students/update/${student.id}`}>
+              <button>Edit Student</button></Link>
+            <br />
+            <br />
+            <form onSubmit={onSave}>
+              <select value={selectedCampus} name='selectedCampus' onChange={onChange} >
+                <option value='-1'>Select Campus</option>
+                {
+                  campusesFiltered.map(campus => {
+                    return (
+                      <option key={campus.id} value={campus.id}>
+                        {campus.name}
+                      </option>
+                    );
+                  })
+                }
+              </select>
 
-            <button disabled={student.campusId * 1 === -1}>
-              Change Campus
+              <button disabled={selectedCampus * 1 === -1}>
+                Change Campus
             </button>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 }
 const mapStateToProps = ({ campuses, students }, { id }) => {
   const student = students.find(student => student.id === id);
@@ -87,5 +112,11 @@ const mapStateToProps = ({ campuses, students }, { id }) => {
   };
 };
 
-export default connect(mapStateToProps)(Student);
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    saveStudent: (student) => dispatch(saveStudent(student, history))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Student);
 
