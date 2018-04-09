@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Nav from './Nav';
 import Home from './Home';
 import Students from './Students';
@@ -9,40 +10,42 @@ import CampusForm from './CampusForm';
 import Student from './Student';
 import StudentCreate from './StudentCreate';
 import StudentUpdate from './StudentUpdate';
-import { connect } from 'react-redux';
+
 import { loadStudents } from '../redux/students';
 import { loadCampuses } from '../redux/campuses';
 
-class App extends Component{
-  componentDidMount(){
+class App extends Component {
+  componentDidMount() {
     this.props.loadStudents();
     this.props.loadCampuses();
 
   }
-  render(){
+  render() {
 
     return (
       <Router>
         <div>
           <Nav />
-          <Route path='/' exact component = { Home } />
-          <Route path='/students' exact component = { Students } />
-          <Route path='/campuses' exact component = { Campuses } />
-           <Route path='/campuses/create' exact component = { CampusForm } />
-          <Route path='/students/create' exact component = { StudentCreate } />
-          <Route path='/campuses/:id' exact render = {({ match })=> <Campus id= { match.params.id*1 } />} />
-          <Route path='/students/:id' exact render = {({ match })=> <Student id= { match.params.id*1 } />} />
-          <Route path='/students/update/:id' exact render = {({ match, history })=> <StudentUpdate history= { history } id= { match.params.id*1 } />} />
+          <Route path='/' exact component={Home} />
+          <Route path='/students' exact component={Students} />
+          <Route path='/campuses' exact component={Campuses} />
+          <Switch>
+            <Route path='/campuses/create' exact render={({ history })=> <CampusForm history={history} />} />
+            <Route path='/students/create' exact component={StudentCreate} />
+            <Route path='/campuses/:id' exact render={({ match }) => <Campus id={match.params.id * 1} />} />
+            <Route path='/students/:id' exact render={({ match }) => <Student id={match.params.id * 1} />} />
+            <Route path='/students/update/:id' exact render={({ match, history }) => <StudentUpdate history={history} id={match.params.id * 1} />} />
+          </Switch>
         </div>
       </Router>
     );
   }
 }
 
-const mapDispacthToProps = (dispatch)=> {
+const mapDispacthToProps = (dispatch) => {
   return {
-    loadStudents: ()=> dispatch(loadStudents()),
-    loadCampuses: ()=> dispatch(loadCampuses())
+    loadStudents: () => dispatch(loadStudents()),
+    loadCampuses: () => dispatch(loadCampuses())
   };
 };
 

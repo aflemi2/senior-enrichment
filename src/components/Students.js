@@ -26,7 +26,7 @@ const Students = ({ students, campuses }) => {
             return (
               <div key={student.id} className="col-sm">
                 <Link to={`/students/${student.id}`} key={student.id}>
-                  <img src={student.imageUrl} width={100} className="rounded" />
+                  <img src={student.imageUrl} width={120} className="rounded" />
                   <br />
                   {student.name}
                 </Link>

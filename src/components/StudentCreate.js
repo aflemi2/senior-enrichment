@@ -11,14 +11,28 @@ class StudentCreate extends Component {
       lastName: '',
       gpa: '',
       email: '',
-      error: null
+      error: null,
+      errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.validators = {
+      email: (value)=> {
+        if(!value){
+          return 'Email is required.';
+        }
+      },
+      gpa: (value)=> {
+        if(!value){
+          return 'GPA is required.';
+        }
+      },
+    };
   }
 
   onSave(ev) {
     ev.preventDefault();
+    // const errors
     const student = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -51,7 +65,7 @@ class StudentCreate extends Component {
     const { onChange, onSave } = this;
     return (
       <div>
-        <h1>Create A Student</h1>
+        <h1>Create Student Profile</h1>
         <form onSubmit={onSave}>
           {
             error && (
@@ -70,6 +84,8 @@ class StudentCreate extends Component {
           <input value={gpa} name='gpa' onChange={onChange} />
           <div>Email</div>
           <input value={email} name='email' onChange={onChange} />
+          <br />
+          <br />
           <button>Add Student</button>
         </form>
       </div>
@@ -77,7 +93,8 @@ class StudentCreate extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { history }) => {
+const mapDispatchToProps = (dispatch, { history } ) => {
+
   return {
     saveStudent: (student) => dispatch(saveStudent(student, history)),
 

@@ -38,6 +38,7 @@ class StudentUpdate extends Component{
     this.setState({ [ev.target.name]: ev.target.value });
   }
 
+
   componentWillReceiveProps(nextProps){
     if(nextProps.student){
       this.setState({
@@ -59,7 +60,7 @@ class StudentUpdate extends Component{
     }
     return (
       <div>
-        <h1>Editing { student.name }</h1>
+        <h2>Edit Profile: { student.name }</h2>
         <form onSubmit={ onSave }>
           {
             error && (
@@ -78,7 +79,9 @@ class StudentUpdate extends Component{
           <input value={gpa} name='gpa' onChange={onChange} />
           <div>Email</div>
           <input value={email} name='email' onChange={onChange} />
-          <button onClick={ onSave }>Add Student</button>
+          <br />
+          <br />
+          <button onClick={ onSave }>Save Changes</button>
         </form>
         <button onClick={ onDelete }>Delete Student</button>
       </div>
