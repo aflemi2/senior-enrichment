@@ -32,7 +32,7 @@ class App extends Component{
           <Route path='/students/create' exact component = { StudentCreate } />
           <Route path='/campuses/:id' exact render = {({ match })=> <Campus id= { match.params.id*1 } />} />
           <Route path='/students/:id' exact render = {({ match })=> <Student id= { match.params.id*1 } />} />
-          <Route path='/students/update/:id' exact render = {({ match })=> <StudentUpdate id= { match.params.id*1 } />} />
+          <Route path='/students/update/:id' exact render = {({ match, history })=> <StudentUpdate history= { history } id= { match.params.id*1 } />} />
         </div>
       </Router>
     );

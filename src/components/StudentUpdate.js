@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveStudent, deleteStudent } from '../redux/students';
 
-
 class StudentUpdate extends Component{
   constructor(props){
     super(props);
+
     this.state = {
       firstName: this.props.student ? this.props.student.firstName : '',
       lastName: this.props.student ? this.props.student.lastName : '',
@@ -18,11 +18,12 @@ class StudentUpdate extends Component{
     this.onDelete = this.onDelete.bind(this);
   }
   onDelete(){
-    this.props.deleteStudent({ id: this.props.student.id });
+    this.props.deleteStudent({ id: this.props.id });
   }
   onSave(ev) {
     ev.preventDefault();
     const student = {
+      id: this.props.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       gpa: this.state.gpa,
@@ -38,14 +39,17 @@ class StudentUpdate extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    const { firstName, lastName, gpa, email } = nextProps.props.student;
-    this.setState({
-      firstName: nextProps.student ? firstName : '',
-      lastName: nextProps.student ? lastName : '',
-      gpa: nextProps.student ? gpa : '',
-      email: nextProps.student ? email : '',
-    });
+    if(nextProps.student){
+      this.setState({
+        id: nextProps.student.id,
+        firstName: nextProps.student.firstName,
+        lastName: nextProps.student.lastName,
+        gpa: nextProps.student.gpa,
+        email: nextProps.student.email
+      });
+    }
   }
+
   render(){
     const { student } = this.props;
     const { firstName, lastName, gpa, email, error } = this.state;
@@ -76,7 +80,7 @@ class StudentUpdate extends Component{
           <input value={email} name='email' onChange={onChange} />
           <button onClick={ onSave }>Add Student</button>
         </form>
-        <button onClick={ onDelete }>Delete</button>
+        <button onClick={ onDelete }>Delete Student</button>
       </div>
     );
   }

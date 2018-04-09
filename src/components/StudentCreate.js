@@ -35,6 +35,17 @@ class StudentCreate extends Component {
     this.setState({ [ev.target.name]: ev.target.value });
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.student){
+      this.setState({
+        firstName: nextProps.student.firstName,
+        lastName: nextProps.student.lastName,
+        gpa: nextProps.student.gpa,
+        email: nextProps.student.email
+      });
+    }
+  }
+
   render() {
     const { firstName, lastName, gpa, email, error } = this.state;
     const { onChange, onSave } = this;
