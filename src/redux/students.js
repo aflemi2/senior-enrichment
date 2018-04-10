@@ -5,9 +5,9 @@ const SET_STUDENTS = 'SET_STUDENTS';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
 const DELETE_STUDENT = 'DELETE_STUDENT';
 const CREATE_STUDENT = 'CREATE_STUDENT';
-//Action Creators
 
-//Reducer
+//Action Creators
+//studentsReducer
 export default (state = [], action)=> {
   switch(action.type){
     case SET_STUDENTS:
@@ -65,7 +65,7 @@ export const saveStudent = (student, history)=> {
         )
         .then( ()=> {
           if(history){
-            history.push('/students');
+            history.push(`/students/${student.id}`);
           }
         });
     };
@@ -78,8 +78,8 @@ export const saveStudent = (student, history)=> {
         student
         })
       )
-      .then( ()=> {
-        history.push('/students');
+      .then( (data)=> {
+        history.push(`/students/${data.student.id}`);
       });
   };
 };

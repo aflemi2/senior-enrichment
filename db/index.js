@@ -25,7 +25,7 @@ const syncAndSeed = ()=> {
       Campus.create({ name: 'North Campus',description: faker.lorem.paragraph(6) }),
       Campus.create({ name: 'South Campus', description: faker.lorem.paragraph(7)}),
       Campus.create({ name: 'East Campus', description: faker.lorem.paragraph(6)}),
-      Student.create({ firstName: 'Moe' , lastName: 'Brown', gpa: randomNum(), email: email(), imageUrl: '/public/images/student11.jpg'}),
+      Student.create({ firstName: 'Moe' , lastName: 'Brown', gpa: randomNum(), email: email()}),
       Student.create({ firstName: 'Curly', lastName: 'Loo' , gpa: randomNum(), email: email()}),
       Student.create({ firstName: 'Bey', lastName: 'Smith' , gpa: randomNum(), email: email()}),
       Student.create(randomStudent()),
