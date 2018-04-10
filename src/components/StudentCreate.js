@@ -26,13 +26,28 @@ class StudentCreate extends Component {
         if(!value){
           return 'GPA is required.';
         }
-      },
-    };
-  }
+        const num = parseInt(value);
+        return (num < 0 || num > 4.1) ? 'GPA must be between 0.0 and 4.0.' : null;
+        }
+      };
+    }
+
 
   onSave(ev) {
     ev.preventDefault();
-    // const errors
+    const errors = Object.keys(this.validators).reduce( (memo, key )=> {
+      const validator = this.validators[key];
+      const value = this.state[key];
+      const error = validator(value);
+      if(error){
+        memo[key] = error;
+      }
+      return memo;
+    }, {});
+    this.setState({ errors });
+    if(Object.keys(errors).length){
+      return;
+    }
     const student = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -61,7 +76,7 @@ class StudentCreate extends Component {
   }
 
   render() {
-    const { firstName, lastName, gpa, email, error } = this.state;
+    const { firstName, lastName, gpa, email, error, errors } = this.state;
     const { onChange, onSave } = this;
     return (
       <div>
@@ -82,8 +97,10 @@ class StudentCreate extends Component {
           <input value={lastName} name='lastName' onChange={onChange} />
           <div>GPA</div>
           <input value={gpa} name='gpa' onChange={onChange} />
+          { errors.gpa }
           <div>Email</div>
           <input value={email} name='email' onChange={onChange} />
+          { errors.email }
           <br />
           <br />
           <button>Add Student</button>

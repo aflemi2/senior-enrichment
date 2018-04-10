@@ -15,18 +15,19 @@ const Students = ({ students, campuses }) => {
   return (
     <div className="container">
       <h2>All Students</h2>
-      <Link to='/students/create'>Add Student</Link>
+      <Link to='/students/create' className="btn btn-outline-primary">Add Student</Link>
       <hr />
       <ul className="row">
         {
           students.map(student => {
             const campus = campuses.find(campus => campus.id === student.campusId);
+            const image = student.imageUrl;
             const campusName = !campus ? null : (<Link to={`/campuses/${campus.id}`}>{campus.name} </Link>);
-
+            if(student.imageUrl){
             return (
               <div key={student.id} className="col-sm">
                 <Link to={`/students/${student.id}`} key={student.id}>
-                  <img src={student.imageUrl} width={120} className="rounded" />
+                  <img src={image} width={120} className="rounded" />
                   <br />
                   {student.name}
                 </Link>
@@ -34,7 +35,7 @@ const Students = ({ students, campuses }) => {
                 {campusName}
 
               </div>
-            );
+            );}
           })
         }
       </ul>

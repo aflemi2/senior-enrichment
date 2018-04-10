@@ -29,7 +29,7 @@ class Student extends Component {
   }
 
   onChange(ev) {
-    this.setState({ [ev.target.name]: ev.target.value });
+    this.setState({ [ev.target.name]: ev.target.value*1 });
   }
 
   componentWillReceiveProps(nextProps){
@@ -49,19 +49,18 @@ class Student extends Component {
     const { campus, student, campusesFiltered } = this.props;
     const { onSave, onChange } = this;
     const { selectedCampus } = this.state;
-    const style = { color: 'red' };
     const campusName = campus ? (
       <div> Attending:
       <Link to={`/campuses/${campus.id}`}> {campus.name} </Link>
       </div>
     ) : (
-        <p style={style}>This student is not registered with a campus.</p>);
+        <p style={{ color: 'red' }}>This student is not registered with a campus.</p>);
     if (!student) {
       return null;
     }
     return (
       <div className='container'>
-        <h1>Student Profile Page</h1>
+        <h2>Student Profile Page</h2>
         <hr />
         <div className='row'>
           <div className='col'>

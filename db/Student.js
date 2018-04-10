@@ -1,6 +1,11 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
 
+const randomPhoto = ()=> {
+  const num = Math.floor(Math.random()*17)+1;
+  return `/public/images/student${num}.jpg`;
+}
+
 const Student = conn.define('student', {
   firstName: {
     type: Sequelize.STRING,
@@ -17,11 +22,12 @@ const Student = conn.define('student', {
     }
   },
   gpa: Sequelize.FLOAT,
-
-},{
+  }
+,{
   getterMethods: {
     imageUrl() {
-      return `/public/images/student${ this.id%9 + 1}.jpg`;
+      if(this.id > 10){ return randomPhoto();}
+       return `/public/images/student${ this.id%10 + 1}.jpg`;
     },
     name() {
       return `${this.firstName} ${this.lastName}`;

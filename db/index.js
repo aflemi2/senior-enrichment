@@ -33,6 +33,13 @@ const syncAndSeed = ()=> {
       Student.create(randomStudent()),
       Student.create(randomStudent()),
       Student.create(randomStudent()),
+      Student.create(randomStudent()),
+      Student.create(randomStudent()),
+      Student.create(randomStudent()),
+      Student.create(randomStudent()),
+      Student.create(randomStudent()),
+      Student.create(randomStudent()),
+      Student.create(randomStudent()),
       Campus.create({ name: 'Empty Campus'})
     ])
     .then(([ camp1, camp2, camp3, moe, larry, curly, r1, r2, r3 ])=> {

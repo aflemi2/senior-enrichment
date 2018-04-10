@@ -9,19 +9,20 @@ const Nav = ({ students, campuses })=> {
   if(!campuses){
     return null;
   }
+
   return (
-    <ul className="navbar navbar-default">
-      <div>
+    <ul className="navbar navbar-default" >
+      <div className='btn-lg'>
         <NavLink to='/'>
           Home
         </NavLink>
       </div>
-      <div>
+      <div className='btn-lg'>
         <NavLink to='/students'>
           Students ({ students.length })
         </NavLink>
       </div>
-      <div>
+      <div className='btn-lg'>
       <NavLink to='/campuses'>
          Campuses ({ campuses.length })
         </NavLink>

@@ -7,7 +7,7 @@ const Campuses = ({ campuses }) => {
   return (
     <div className="container">
       <h2>All Campuses</h2>
-      <Link to='/campuses/create'>Add Campus</Link>
+      <Link to='/campuses/create' className="btn btn-outline-primary">Add Campus</Link>
       <hr />
 
       <div>{ noCampus }</div>
@@ -19,7 +19,7 @@ const Campuses = ({ campuses }) => {
                 <Link to={`/campuses/${campus.id}`}>
                   <img src={campus.imageUrl} width={250} className="rounded" />
                   <br />
-                  <div>{campus.name}</div>
+                  <div >{campus.name}</div>
                 </Link>
               </div>
             );
