@@ -1,7 +1,7 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
 
-const randomPhoto = ()=> {
+const randomPhoto = ()=> { //Bug...will run on every reload
   const num = Math.floor(Math.random()*17)+1;
   return `/public/images/student${num}.jpg`;
 }
@@ -26,8 +26,8 @@ const Student = conn.define('student', {
 ,{
   getterMethods: {
     imageUrl() {
-      if(this.id > 10){ return randomPhoto();}
-       return `/public/images/student${ this.id%10 + 1}.jpg`;
+      return this.id > 10 ? `/public/images/student${ this.id%10 + 11}.jpg` :
+       `/public/images/student${ this.id%10 + 1}.jpg`;
     },
     name() {
       return `${this.firstName} ${this.lastName}`;

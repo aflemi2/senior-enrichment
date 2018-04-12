@@ -30,11 +30,12 @@ class App extends Component {
           <Route path='/students' exact component={Students} />
           <Route path='/campuses' exact component={Campuses} />
           <Switch>
-            <Route path='/campuses/create' exact render={({ history })=> <CampusForm history={history} />} />
+            <Route path='/campuses/create' exact component={CampusForm } />
             <Route path='/students/create' exact component={StudentCreate} />
             <Route path='/campuses/:id' exact render={({ match }) => <Campus id={match.params.id * 1} />} />
             <Route path='/students/:id' exact render={({ match, history }) => <Student history={history} id={match.params.id * 1} />} />
             <Route path='/students/update/:id' exact render={({ match, history }) => <StudentUpdate history={history} id={match.params.id * 1} />} />
+            <Route path='/campuses/update/:id' exact render={({ match, history }) => <CampusForm history={history} id={match.params.id * 1} />} />
           </Switch>
         </div>
       </Router>

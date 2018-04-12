@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveCampus, deleteCampus } from '../redux/campuses';
+import { saveStudent } from '../redux/students';
 
 class CampusForm extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
       name: this.props.campus ? this.props.campus.name : '',
       address: this.props.campus ? this.props.campus.address : '',
       description: this.props.campus ? this.props.campus.description : '',
+      selectedStudent: -1,
       error: null
     };
     this.onSave = this.onSave.bind(this);
-    this.onChange =this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onChangeStudent = this.onChangeStudent.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onAddStudent = this.onAddStudent.bind(this);
   }
 
-  onDelete(){
+  onDelete() {
     this.props.deleteCampus({ id: this.props.id });
   }
 
-  onSave(ev){
+  onSave(ev) {
     ev.preventDefault();
     const campus = {
       id: this.props.id,
@@ -31,12 +35,29 @@ class CampusForm extends Component {
     this.props.saveCampus(campus);
   }
 
-  onChange(ev){
-    this.setState({ [ev.target.name]: ev.target.value});
+  onAddStudent(ev) {
+    ev.preventDefault();
+    const studentInfo = this.props.students.find(student => student.id === this.state.selectedStudent);
+    const student = {
+      campusId: this.props.id,
+      firstName: studentInfo.firstName,
+      lastName: studentInfo.lastName,
+      gpa: studentInfo.gpa,
+      email: studentInfo.email
+    };
+    student.campusId = this.props.id;
+    this.props.saveStudent(student);
+    this.setState({selectedStudent: -1});
+  }
+  onChangeStudent(ev) {
+    this.setState({ [ev.target.name]: ev.target.value * 1 });
+  }
+  onChange(ev) {
+    this.setState({ [ev.target.name]: ev.target.value });
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.campus){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.campus) {
       this.setState({
         id: nextProps.campus.id,
         name: nextProps.campus.name,
@@ -45,54 +66,112 @@ class CampusForm extends Component {
     }
   }
 
-  render(){
-    const { campus, students, id } = this.props;
-    const { name, address, description } = this.state;
-    const { onSave, onChange, onDelete } = this;
-    if(!id){
+  render() {
+    const { campus, studentsOnCampus, studentsNotOnCampus, id } = this.props;
+    const { name, address, description, selectedStudent } = this.state;
+    const { onSave, onChange, onChangeStudent, onDelete, onAddStudent } = this;
+    if (!id) {
       return (
         <div>
-        <div>CREATE CAMPUS</div>
-        <form onSubmit = { onSave }>
-        <div> Campus Name </div>
-        <input value={ name } name= 'name' onChange = { onChange } />
-        <div> Campus Location </div>
-        <input value={ address } name= 'address' onChange = { onChange } />
-        <div> Campus Description</div>
-        <textarea value={ description } name= 'description' onChange = { onChange } />
-        <button disabled={ name.length === 0}>Add Campus</button>
-      </form>
-      </div>
+          <h1>Create A Campus</h1>
+          <form onSubmit={onSave}>
+            <div> Campus Name </div>
+            <input value={name} name='name' onChange={onChange} />
+            <div> Campus Location </div>
+            <input value={address} name='address' onChange={onChange} />
+            <div> Campus Description</div>
+            <textarea value={description} name='description' onChange={onChange} />
+            <button disabled={name.length === 0}>Add Campus</button>
+          </form>
+        </div>
       );
+    }
+    if (!campus) {
+      return null;
     }
     return (
       <div>
-      <form onSubmit = { onSave }>
-        <div> Campus Name </div>
-        <input value={ name } name= 'name' onChange = { onChange } />
-        <div> Campus Location </div>
-        <input value={ address } name= 'address' onChange = { onChange } />
-        <div> Campus Description</div>
-        <textarea value={ description } name= 'description' onChange = { onChange } />
-        <button disabled={ name.length === 0}>Save Changes</button>
-        <button onClick={ onDelete }>Delete Campus</button>
-      </form>
-      <h3>Students on Campus</h3>
-      <select>
-        <option>students</option>
-      </select>
+        <div style={{ float: 'left' }}>
+          <h2>Edit Campus: {campus.name}</h2>
+          <form onSubmit={onSave}>
+            <div> Campus Name </div>
+            <input value={name} name='name' onChange={onChange} />
+            <div> Campus Location </div>
+            <input value={address} name='address' onChange={onChange} />
+            <div> Campus Description</div>
+            <textarea value={description} name='description' onChange={onChange} />
+            <br />
+            <br />
+            <button disabled={name.length === 0}>Save Changes</button>
+            <br />
+            <br />
+            <button onClick={onDelete}>Delete Campus</button>
+          </form>
+
+          <form onSubmit={onAddStudent} >
+            <select value={selectedStudent} name='selectedStudent' onChange={onChangeStudent} >
+              <option>Select student</option>
+              {
+                studentsNotOnCampus.map(student => {
+                    if(student){
+                    return (
+                    <option key={student.id} value={student.id}>
+                      {student.name} {student.campusId}
+                    </option>
+                    );
+                    }
+                  }
+                )
+              }
+            </select>
+            <button disabled={selectedStudent * 1 === -1}>
+              Add Student To Campus
+            </button>
+          </form>
+        </div>
+        <div style={{ float: 'right' }}>
+          <h3>Students on Campus</h3>
+          <div className='row'>
+            {
+              studentsOnCampus.map(student => {
+                if (student) {
+                  return (
+                    <div key={student.id} className="col-sm">
+                      <img src={student.imageUrl} width={90} className="rounded" />
+                      <br />
+                      {student.name}
+                    </div>
+                  );
+                }
+              })
+            }
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ campuses, students}, {id})=> {
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    saveStudent: (student) => dispatch(saveStudent(student, history)),
+    saveCampus: (campus) => dispatch(saveCampus(campus, history)),
+    deleteCampus: (campus) => dispatch(deleteCampus(campus, history)),
+  };
+};
+
+const mapStateToProps = ({ campuses, students }, { id }) => {
+  const campus = campuses ? campuses.find(campus => id === campus.id) : null;
+  const studentsOnCampus = campus ? students.filter(student => student.campusId === campus.id) : null;
+  const studentsNotOnCampus = campus ? students.filter(student => student.campusId !== campus.id) : null;
   return {
     id,
-    campuses,
+    campus,
+    studentsNotOnCampus,
+    studentsOnCampus,
     students
   };
 };
 
-export default connect(mapStateToProps)(CampusForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CampusForm);
 
