@@ -85,7 +85,9 @@ class CampusForm extends Component {
 
   onDeleteStudent(ev) {
     ev.preventDefault();
-    const studentInfo = this.props.students.find(student => student.id === this.id);
+    console.log(ev.target.value);
+
+    const studentInfo = this.props.students.find(student => student.id === ev.target.value*1);
     const student = {
       campusId: null,
       id: studentInfo.id,
@@ -186,9 +188,9 @@ class CampusForm extends Component {
                 if (student) {
                   return (
                     <div key={student.id} className="col-sm">
-                      <img src={student.imageUrl} width={90} className="rounded" />
+                      <img src={student.imageUrl} width={100} className="rounded" />
                       <br />
-                      {student.name} <button name='bazz' onClick={ onDeleteStudent }>X</button>
+                      {student.name} <button value={student.id} onClick={ onDeleteStudent }>x</button>
                     </div>
                   );
                 }
