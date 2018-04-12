@@ -85,8 +85,6 @@ class CampusForm extends Component {
 
   onDeleteStudent(ev) {
     ev.preventDefault();
-    console.log(ev.target.value);
-
     const studentInfo = this.props.students.find(student => student.id === ev.target.value*1);
     const student = {
       campusId: null,

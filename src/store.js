@@ -6,7 +6,7 @@ import reducer from './redux';
 
 const store = createStore(
   reducer,
-  applyMiddleware(thunk, loggerMiddleware)
+  applyMiddleware( thunk, loggerMiddleware )
 );
 
 export default store;

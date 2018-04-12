@@ -1,11 +1,6 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
 
-const randomPhoto = ()=> { //Bug...will run on every reload
-  const num = Math.floor(Math.random()*17)+1;
-  return `/public/images/student${num}.jpg`;
-}
-
 const Student = conn.define('student', {
   firstName: {
     type: Sequelize.STRING,

@@ -6,8 +6,7 @@ const UPDATE_STUDENT = 'UPDATE_STUDENT';
 const DELETE_STUDENT = 'DELETE_STUDENT';
 const CREATE_STUDENT = 'CREATE_STUDENT';
 
-//Action Creators
-//studentsReducer
+//Action Creators for studentsReducer
 export default (state = [], action)=> {
   switch(action.type){
     case SET_STUDENTS:

@@ -17,7 +17,7 @@ const Campuses = ({ campuses }) => {
             return (
               <div className="col-sm" key={campus.id}>
                 <Link to={`/campuses/${campus.id}`}>
-                  <img src={campus.imageUrl} width={300} className="rounded" />
+                  <img src={campus.imageUrl} width={320} className="rounded" />
                   <br />
                   <div >{campus.name}</div>
                 </Link>
