@@ -7,14 +7,9 @@ const Campus = ({ campus, studentsOnCampus }) => {
     return null;
   }
   const students = (studentsOnCampus.length === 0) ? (
-    <div>
       <div>
         There are no students registered at this campus.
       </div>
-      <Link to={`/campuses/update/${campus.id}`}>
-        <button>Edit Campus</button>
-      </Link>
-    </div>
   ) :
   (
     studentsOnCampus.map(student => {
@@ -39,6 +34,9 @@ const Campus = ({ campus, studentsOnCampus }) => {
         <img src={campus.imageUrl} width={250} className="col rounded" />
         <div className="col">
            {campus.description}
+           <br />
+           <br />
+           Campus Location: {campus.address}
            <br />
            <br />
            <Link to={`/campuses/update/${campus.id}`}>

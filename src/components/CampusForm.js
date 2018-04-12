@@ -12,13 +12,32 @@ class CampusForm extends Component {
       address: this.props.campus ? this.props.campus.address : '',
       description: this.props.campus ? this.props.campus.description : '',
       selectedStudent: -1,
-      error: null
+      error: null,
+      errors: {}
     };
     this.onSave = this.onSave.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onChangeStudent = this.onChangeStudent.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onAddStudent = this.onAddStudent.bind(this);
+    this.onDeleteStudent = this.onDeleteStudent.bind(this);
+    this.validators = {
+      name: (value) => {
+        if (!value) {
+          return 'Campus name is required.';
+        }
+      },
+      address: (value) => {
+        if (!value) {
+          return 'Address is required.';
+        }
+      },
+      description: (value) => {
+        if (!value) {
+          return 'Must provide a campus description.';
+        }
+      }
+    };
   }
 
   onDelete() {
@@ -27,9 +46,23 @@ class CampusForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
+      const validator = this.validators[key];
+      const value = this.state[key];
+      const error = validator(value);
+      if (error) {
+        memo[key] = error;
+      }
+      return memo;
+    }, {});
+    this.setState({ errors });
+    if (Object.keys(errors).length) {
+      return;
+    }
     const campus = {
       id: this.props.id,
       name: this.state.name,
+      address: this.state.address,
       description: this.state.description
     };
     this.props.saveCampus(campus);
@@ -40,15 +73,30 @@ class CampusForm extends Component {
     const studentInfo = this.props.students.find(student => student.id === this.state.selectedStudent);
     const student = {
       campusId: this.props.id,
+      id: studentInfo.id,
       firstName: studentInfo.firstName,
       lastName: studentInfo.lastName,
       gpa: studentInfo.gpa,
       email: studentInfo.email
     };
-    student.campusId = this.props.id;
     this.props.saveStudent(student);
-    this.setState({selectedStudent: -1});
+    this.setState({ selectedStudent: -1 });
   }
+
+  onDeleteStudent(ev) {
+    ev.preventDefault();
+    const studentInfo = this.props.students.find(student => student.id === this.id);
+    const student = {
+      campusId: null,
+      id: studentInfo.id,
+      firstName: studentInfo.firstName,
+      lastName: studentInfo.lastName,
+      gpa: studentInfo.gpa,
+      email: studentInfo.email
+    };
+    this.props.saveStudent(student);
+  }
+
   onChangeStudent(ev) {
     this.setState({ [ev.target.name]: ev.target.value * 1 });
   }
@@ -61,6 +109,7 @@ class CampusForm extends Component {
       this.setState({
         id: nextProps.campus.id,
         name: nextProps.campus.name,
+        address: nextProps.campus.address,
         description: nextProps.campus.description
       });
     }
@@ -69,7 +118,7 @@ class CampusForm extends Component {
   render() {
     const { campus, studentsOnCampus, studentsNotOnCampus, id } = this.props;
     const { name, address, description, selectedStudent } = this.state;
-    const { onSave, onChange, onChangeStudent, onDelete, onAddStudent } = this;
+    const { onSave, onChange, onChangeStudent, onDelete, onDeleteStudent, onAddStudent } = this;
     if (!id) {
       return (
         <div>
@@ -80,7 +129,7 @@ class CampusForm extends Component {
             <div> Campus Location </div>
             <input value={address} name='address' onChange={onChange} />
             <div> Campus Description</div>
-            <textarea value={description} name='description' onChange={onChange} />
+            <textarea value={description} name='description' onChange={onChange} rows={10} />
             <button disabled={name.length === 0}>Add Campus</button>
           </form>
         </div>
@@ -99,7 +148,7 @@ class CampusForm extends Component {
             <div> Campus Location </div>
             <input value={address} name='address' onChange={onChange} />
             <div> Campus Description</div>
-            <textarea value={description} name='description' onChange={onChange} />
+            <textarea value={description} name='description' onChange={onChange} rows={10} />
             <br />
             <br />
             <button disabled={name.length === 0}>Save Changes</button>
@@ -113,14 +162,14 @@ class CampusForm extends Component {
               <option>Select student</option>
               {
                 studentsNotOnCampus.map(student => {
-                    if(student){
+                  if (student) {
                     return (
-                    <option key={student.id} value={student.id}>
-                      {student.name} {student.campusId}
-                    </option>
+                      <option key={student.id} value={student.id}>
+                        {student.name} {student.campusId}
+                      </option>
                     );
-                    }
                   }
+                }
                 )
               }
             </select>
@@ -139,7 +188,7 @@ class CampusForm extends Component {
                     <div key={student.id} className="col-sm">
                       <img src={student.imageUrl} width={90} className="rounded" />
                       <br />
-                      {student.name}
+                      {student.name} <button name='bazz' onClick={ onDeleteStudent }>X</button>
                     </div>
                   );
                 }
@@ -163,7 +212,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
 const mapStateToProps = ({ campuses, students }, { id }) => {
   const campus = campuses ? campuses.find(campus => id === campus.id) : null;
   const studentsOnCampus = campus ? students.filter(student => student.campusId === campus.id) : null;
-  const studentsNotOnCampus = campus ? students.filter(student => student.campusId !== campus.id) : null;
+  const studentsNotOnCampus = campus ? students.filter(student => student.campusId !== id) : null;
   return {
     id,
     campus,

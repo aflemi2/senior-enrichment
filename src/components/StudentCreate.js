@@ -17,6 +17,16 @@ class StudentCreate extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.validators = {
+      firstName: (value)=> {
+        if(!value){
+          return 'First name is required.';
+        }
+      },
+      lastName: (value)=> {
+        if(!value){
+          return 'lastName is required.';
+        }
+      },
       email: (value)=> {
         if(!value){
           return 'Email is required.';

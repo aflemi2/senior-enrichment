@@ -6,6 +6,9 @@ const Campus = conn.define('campus', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  address: {
+    type: Sequelize.TEXT
+  },
   description: {
     type: Sequelize.TEXT
   }

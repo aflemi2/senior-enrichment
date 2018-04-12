@@ -20,7 +20,7 @@ const Students = ({ students, campuses }) => {
       <ul className="row">
         {
           students.map(student => {
-            const campus = campuses.find(campus => campus.id === student.campusId); //put this in mapStateToProps
+            const campus = campuses.find(campus => campus.id === student.campusId);
             const image = student.imageUrl;
             const campusName = !campus ? null : (<Link to={`/campuses/${campus.id}`}>{campus.name} </Link>);
             if(student.imageUrl){

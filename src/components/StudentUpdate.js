@@ -11,17 +11,55 @@ class StudentUpdate extends Component{
       lastName: this.props.student ? this.props.student.lastName : '',
       gpa: this.props.student ? this.props.student.gpa : '',
       email: this.props.student ? this.props.student.email : '',
-      error: null
+      error: null,
+      errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.validators = {
+      firstName: (value)=> {
+        if(!value){
+          return 'First name is required.';
+        }
+      },
+      lastName: (value)=> {
+        if(!value){
+          return 'lastName is required.';
+        }
+      },
+      email: (value)=> {
+        if(!value){
+          return 'Email is required.';
+        }
+      },
+      gpa: (value)=> {
+        if(!value){
+          return 'GPA is required.';
+        }
+        const num = parseInt(value);
+        return (num < 0 || num > 4.1) ? 'GPA must be between 0.0 and 4.0.' : null;
+        }
+      };
   }
   onDelete(){
     this.props.deleteStudent({ id: this.props.id });
   }
   onSave(ev) {
     ev.preventDefault();
+    const errors = Object.keys(this.validators).reduce( (memo, key )=> {
+      const validator = this.validators[key];
+      const value = this.state[key];
+      const error = validator(value);
+      if(error){
+        memo[key] = error;
+      }
+      return memo;
+    }, {});
+    this.setState({errors});
+    if(Object.keys(errors.length)){
+      return;
+    }
     const student = {
       id: this.props.id,
       firstName: this.state.firstName,
@@ -37,7 +75,6 @@ class StudentUpdate extends Component{
   onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
-
 
   componentWillReceiveProps(nextProps){
     if(nextProps.student){

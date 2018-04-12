@@ -65,6 +65,9 @@ export const saveStudent = (student, history)=> {
         )
         .then( ()=> {
           if(history){
+            if(history.location.pathname.indexOf('update')>-1){
+              return;
+            }
             history.push(`/students/${student.id}`);
           }
         });
@@ -79,9 +82,6 @@ export const saveStudent = (student, history)=> {
         })
       )
       .then( (data)=> {
-        if(history.location.pathname.indexOf('update')>-1){
-          return;
-        }
         history.push(`/students/${data.student.id}`);
       });
   };
