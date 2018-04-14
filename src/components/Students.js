@@ -7,7 +7,7 @@ const Students = ({ students, campuses }) => {
     return (
       <div className="container">
         <h2>All Students</h2>
-        <Link to='/students/create'>Add Student</Link>
+        <Link to='/students/create' className="btn btn-outline-primary float-right">Add Student</Link>
         <div>There are no students in the database.</div>
       </div>
     );

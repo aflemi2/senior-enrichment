@@ -7,7 +7,8 @@ const Campus = conn.define('campus', {
     allowNull: false
   },
   address: {
-    type: Sequelize.TEXT
+    type: Sequelize.STRING,
+    allowNull: false
   },
   description: {
     type: Sequelize.TEXT

@@ -132,8 +132,8 @@ class CampusForm extends Component {
             {errors.address}
             <div> Campus Description</div>
             <textarea value={description} name='description' onChange={onChange} rows={10} />
-            {errors.description}
             <br />
+            {errors.description}
             <br />
             <button>Add Campus</button>
           </form>
@@ -150,11 +150,14 @@ class CampusForm extends Component {
           <form onSubmit={onSave}>
             <div> Campus Name </div>
             <input value={name} name='name' onChange={onChange} />
+            {errors.name}
             <div> Campus Location </div>
             <input value={address} name='address' onChange={onChange} />
+            {errors.address}
             <div> Campus Description</div>
             <textarea value={description} name='description' onChange={onChange} rows={10} />
             <br />
+            {errors.description}
             <br />
             <button disabled={name.length === 0}>Save Changes</button>
             <br />

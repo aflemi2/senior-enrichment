@@ -29,9 +29,8 @@ const Campuses = ({ campuses }) => {
   );
 };
 
-const mapStateToProps = ({ students, campuses }) => {
+const mapStateToProps = ({ campuses }) => {
   return {
-    students,
     campuses
   };
 };

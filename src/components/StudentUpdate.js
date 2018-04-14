@@ -90,7 +90,7 @@ class StudentUpdate extends Component {
 
   render() {
     const { student } = this.props;
-    const { firstName, lastName, gpa, email, error } = this.state;
+    const { firstName, lastName, gpa, email, error, errors } = this.state;
     const { onChange, onSave, onDelete } = this;
     if (!student) {
       return null;
@@ -110,12 +110,16 @@ class StudentUpdate extends Component {
           }
           <div>First Name</div>
           <input value={firstName} name='firstName' onChange={onChange} />
+          { errors.firstName }
           <div>Last Name</div>
           <input value={lastName} name='lastName' onChange={onChange} />
+          { errors.lastName }
           <div>GPA</div>
           <input value={gpa} name='gpa' onChange={onChange} />
+          { errors.gpa }
           <div>Email</div>
           <input value={email} name='email' onChange={onChange} />
+          { errors.email }
           <br />
           <br />
           <button onClick={onSave}>Save Changes</button>
