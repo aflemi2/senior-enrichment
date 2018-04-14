@@ -29,11 +29,11 @@ class Student extends Component {
   }
 
   onChange(ev) {
-    this.setState({ [ev.target.name]: ev.target.value*1 });
+    this.setState({ [ev.target.name]: ev.target.value * 1 });
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.student){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.student) {
       this.setState({
         id: nextProps.student.id,
         firstName: nextProps.student.firstName,

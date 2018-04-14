@@ -85,7 +85,7 @@ class CampusForm extends Component {
 
   onDeleteStudent(ev) {
     ev.preventDefault();
-    const studentInfo = this.props.students.find(student => student.id === ev.target.value*1);
+    const studentInfo = this.props.students.find(student => student.id === ev.target.value * 1);
     const student = {
       campusId: null,
       id: studentInfo.id,
@@ -124,16 +124,15 @@ class CampusForm extends Component {
         <div>
           <h1>Create A Campus</h1>
           <form onSubmit={onSave}>
-
             <div> Campus Name </div>
             <input value={name} name='name' onChange={onChange} />
-             { errors.name }
+            {errors.name}
             <div> Campus Location </div>
             <input value={address} name='address' onChange={onChange} />
-            { errors.address }
+            {errors.address}
             <div> Campus Description</div>
             <textarea value={description} name='description' onChange={onChange} rows={10} />
-            { errors.description }
+            {errors.description}
             <br />
             <br />
             <button>Add Campus</button>
@@ -194,7 +193,7 @@ class CampusForm extends Component {
                     <div key={student.id} className="col-sm">
                       <img src={student.imageUrl} width={100} className="rounded" />
                       <br />
-                      {student.name} <button value={student.id} onClick={ onDeleteStudent }>x</button>
+                      {student.name} <button value={student.id} onClick={onDeleteStudent}>x</button>
                     </div>
                   );
                 }

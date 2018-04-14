@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveStudent, deleteStudent } from '../redux/students';
 
-class StudentUpdate extends Component{
-  constructor(props){
+class StudentUpdate extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -18,46 +18,46 @@ class StudentUpdate extends Component{
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.validators = {
-      firstName: (value)=> {
-        if(!value){
+      firstName: (value) => {
+        if (!value) {
           return 'First name is required.';
         }
       },
-      lastName: (value)=> {
-        if(!value){
+      lastName: (value) => {
+        if (!value) {
           return 'lastName is required.';
         }
       },
-      email: (value)=> {
-        if(!value){
+      email: (value) => {
+        if (!value) {
           return 'Email is required.';
         }
       },
-      gpa: (value)=> {
-        if(!value){
+      gpa: (value) => {
+        if (!value) {
           return 'GPA is required.';
         }
         const num = parseInt(value);
         return (num < 0 || num > 4.1) ? 'GPA must be between 0.0 and 4.0.' : null;
-        }
-      };
+      }
+    };
   }
-  onDelete(){
+  onDelete() {
     this.props.deleteStudent({ id: this.props.id });
   }
   onSave(ev) {
     ev.preventDefault();
-    const errors = Object.keys(this.validators).reduce( (memo, key )=> {
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
       const validator = this.validators[key];
       const value = this.state[key];
       const error = validator(value);
-      if(error){
+      if (error) {
         memo[key] = error;
       }
       return memo;
     }, {});
-    this.setState({errors});
-    if(Object.keys(errors.length)){
+    this.setState({ errors });
+    if (Object.keys(errors.length)) {
       return;
     }
     const student = {
@@ -76,8 +76,8 @@ class StudentUpdate extends Component{
     this.setState({ [ev.target.name]: ev.target.value });
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.student){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.student) {
       this.setState({
         id: nextProps.student.id,
         firstName: nextProps.student.firstName,
@@ -88,17 +88,17 @@ class StudentUpdate extends Component{
     }
   }
 
-  render(){
+  render() {
     const { student } = this.props;
     const { firstName, lastName, gpa, email, error } = this.state;
     const { onChange, onSave, onDelete } = this;
-    if(!student){
+    if (!student) {
       return null;
     }
     return (
       <div>
-        <h2>Edit Profile: { student.name }</h2>
-        <form onSubmit={ onSave }>
+        <h2>Edit Profile: {student.name}</h2>
+        <form onSubmit={onSave}>
           {
             error && (
               <div style={{ color: 'red' }}>
@@ -118,26 +118,26 @@ class StudentUpdate extends Component{
           <input value={email} name='email' onChange={onChange} />
           <br />
           <br />
-          <button onClick={ onSave }>Save Changes</button>
+          <button onClick={onSave}>Save Changes</button>
         </form>
-        <button onClick={ onDelete }>Delete Student</button>
+        <button onClick={onDelete}>Delete Student</button>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ students, campuses }, { id })=> {
-  const student = students.find( student => student.id === id );
+const mapStateToProps = ({ students, campuses }, { id }) => {
+  const student = students.find(student => student.id === id);
   return {
     student,
     campuses
   };
 };
 
-const mapDispatchToProps = (dispatch, { history })=> {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    saveStudent: (student)=> dispatch(saveStudent(student, history)),
-    deleteStudent: (student)=> dispatch(deleteStudent(student, history))
+    saveStudent: (student) => dispatch(saveStudent(student, history)),
+    deleteStudent: (student) => dispatch(deleteStudent(student, history))
   };
 };
 

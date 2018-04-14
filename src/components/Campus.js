@@ -7,24 +7,24 @@ const Campus = ({ campus, studentsOnCampus }) => {
     return null;
   }
   const students = (studentsOnCampus.length === 0) ? (
-      <div>
-        There are no students registered at this campus.
-      </div>
+    <div>
+      There are no students registered at this campus.
+    </div>
   ) :
-  (
-    studentsOnCampus.map(student => {
-      return (
-        <div key={student.id} className="col-sm">
-          <img src={student.imageUrl} width={100} className="rounded" />
+    (
+      studentsOnCampus.map(student => {
+        return (
+          <div key={student.id} className="col-sm">
+            <img src={student.imageUrl} width={100} className="rounded" />
             <br />
-          <Link to={`/students/${student.id}`} className="small">
-            {student.name}
-          </Link>
-        </div>
-      );
-    }
-    )
-  );
+            <Link to={`/students/${student.id}`} className="small">
+              {student.name}
+            </Link>
+          </div>
+        );
+      }
+      )
+    );
 
   return (
     <div>
@@ -33,15 +33,15 @@ const Campus = ({ campus, studentsOnCampus }) => {
       <div className="row">
         <img src={campus.imageUrl} width={250} className="col rounded" />
         <div className="col">
-           {campus.description}
-           <br />
-           <br />
-           Campus Location: {campus.address}
-           <br />
-           <br />
-           <Link to={`/campuses/update/${campus.id}`}>
+          {campus.description}
+          <br />
+          <br />
+          Campus Location: {campus.address}
+          <br />
+          <br />
+          <Link to={`/campuses/update/${campus.id}`}>
             <button>Edit Campus</button>
-            </Link>
+          </Link>
         </div>
       </div>
       <br />

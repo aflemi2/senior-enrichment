@@ -23,19 +23,20 @@ const Students = ({ students, campuses }) => {
             const campus = campuses.find(campus => campus.id === student.campusId);
             const image = student.imageUrl;
             const campusName = !campus ? null : (<Link to={`/campuses/${campus.id}`}>{campus.name} </Link>);
-            if(student.imageUrl){
-            return (
-              <div key={student.id} className="col-sm">
-                <Link to={`/students/${student.id}`} key={student.id}>
-                  <img src={image} width={120} className="rounded" />
+            if (student.imageUrl) {
+              return (
+                <div key={student.id} className="col-sm">
+                  <Link to={`/students/${student.id}`} key={student.id}>
+                    <img src={image} width={120} className="rounded" />
+                    <br />
+                    {student.name}
+                  </Link>
                   <br />
-                  {student.name}
-                </Link>
-                <br />
-                {campusName}
+                  {campusName}
 
-              </div>
-            );}
+                </div>
+              );
+            }
           })
         }
       </ul>
