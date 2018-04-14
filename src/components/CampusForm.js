@@ -194,9 +194,10 @@ class CampusForm extends Component {
                 if (student) {
                   return (
                     <div key={student.id} className="col-sm">
-                      <img src={student.imageUrl} width={100} className="rounded" />
+                      <div>{student.name}</div>
+                      <img src={student.imageUrl} width={120} className="rounded" />
                       <br />
-                      {student.name} <button value={student.id} onClick={onDeleteStudent}>x</button>
+                       <button style={{ float: 'right' }} value={student.id} onClick={onDeleteStudent}>x</button>
                     </div>
                   );
                 }
