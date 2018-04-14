@@ -14,8 +14,8 @@ const Students = ({ students, campuses }) => {
   }
   return (
     <div className="container">
+      <Link to='/students/create' className="btn btn-outline-primary float-right">Add Student</Link>
       <h2>Students Attending Margaret Hamilton Interplanetary Academy</h2>
-      <Link to='/students/create' className="btn btn-outline-primary">Add Student</Link>
       <hr />
       <ul className="row">
         {

@@ -68,4 +68,4 @@ module.exports = {
     Student,
     Campus
   }
-}
+};

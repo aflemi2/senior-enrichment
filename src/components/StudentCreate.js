@@ -24,7 +24,7 @@ class StudentCreate extends Component {
       },
       lastName: (value)=> {
         if(!value){
-          return 'lastName is required.';
+          return 'Last name is required.';
         }
       },
       email: (value)=> {
@@ -103,8 +103,10 @@ class StudentCreate extends Component {
           }
           <div>First Name</div>
           <input value={firstName} name='firstName' onChange={onChange} />
+          { errors.firstName }
           <div>Last Name</div>
           <input value={lastName} name='lastName' onChange={onChange} />
+          { errors.lastName }
           <div>GPA</div>
           <input value={gpa} name='gpa' onChange={onChange} />
           { errors.gpa }

@@ -11,19 +11,19 @@ const Nav = ({ students, campuses })=> {
   }
 
   return (
-    <ul className="navbar navbar-default" >
-      <div className='btn-lg'>
-        <NavLink to='/'>
+    <ul className="navbar navbar-expand-md navbar-dark bg-dark mb-4 row justify-content-between" >
+      <div className="nav-item col-4">
+        <NavLink className="nav-link" to='/'>
           Home
         </NavLink>
       </div>
-      <div className='btn-lg'>
-        <NavLink to='/students'>
+      <div className="nav-item">
+        <NavLink className="nav-link" to='/students'>
           Students ({ students.length })
         </NavLink>
       </div>
-      <div className='btn-lg'>
-      <NavLink to='/campuses'>
+      <div className="nav-item">
+      <NavLink className="nav-link" to='/campuses'>
          Campuses ({ campuses.length })
         </NavLink>
       </div>

@@ -117,20 +117,26 @@ class CampusForm extends Component {
 
   render() {
     const { campus, studentsOnCampus, studentsNotOnCampus, id } = this.props;
-    const { name, address, description, selectedStudent } = this.state;
+    const { name, address, description, selectedStudent, errors } = this.state;
     const { onSave, onChange, onChangeStudent, onDelete, onDeleteStudent, onAddStudent } = this;
     if (!id) {
       return (
         <div>
           <h1>Create A Campus</h1>
           <form onSubmit={onSave}>
+
             <div> Campus Name </div>
             <input value={name} name='name' onChange={onChange} />
+             { errors.name }
             <div> Campus Location </div>
             <input value={address} name='address' onChange={onChange} />
+            { errors.address }
             <div> Campus Description</div>
             <textarea value={description} name='description' onChange={onChange} rows={10} />
-            <button disabled={name.length === 0}>Add Campus</button>
+            { errors.description }
+            <br />
+            <br />
+            <button>Add Campus</button>
           </form>
         </div>
       );
